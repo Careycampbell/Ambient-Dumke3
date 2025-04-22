@@ -118,12 +118,12 @@
 
 			const oneShots = new Tone.Players({
 				urls: {
-					"one": "/Ambient-Dumke3/Ambient-Dumke2/oneShots/oS1.wav",
-					"two": "/Ambient-Dumke3/Ambient-Dumke2/oneShots/oS2.wav",
-					"three": "/Ambient-Dumke3/Ambient-Dumke2/oneShots/oS3.wav",
-					"four": "/Ambient-Dumke3/Ambient-Dumke2/oneShots/oS4.wav",
+					"one": "/Ambient-Dumke2/oneShots/oS1.wav",
+					"two": "/Ambient-Dumke2/oneShots/oS2.wav",
+					"three": "/Ambient-Dumke2/oneShots/oS3.wav",
+					"four": "/Ambient-Dumke2/oneShots/oS4.wav",
 				},
-				volume: -30,
+				
 				onload: function () {
 					console.log('oneShots loaded successfully');
 					Tone.Transport.start();
@@ -132,7 +132,9 @@
 					console.error('Error loading oneShots:', error);
 				},
 			});
-			oneShots.connect(freeverb);
+			oneShots.volume.value = -25; // Adjust volume as needed
+			oneShots.toDestination(); // Ensure it's connected to the destination
+			
 
 			function playRandomOneShot(time) {
 				const keys = ["one", "two", "three", "four"];
