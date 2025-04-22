@@ -8,6 +8,22 @@
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
 			<script src="/Ambient-Dumke2/driftDrones/driftingC.wav"></script>
 		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const button = document.createElement("button");
+				button.id = "playButton";
+				button.style.display = "block";
+				button.style.margin = "20px";
+				button.style.padding = "10px";
+				button.textContent = "Play Audio";
+				document.body.appendChild(button);
+
+				// Add the event listener for the button
+				button.addEventListener("click", async () => {
+					await Tone.start();
+					console.log("audio is ready");
+				});
+			});
+
 			// Don't remove this; you'll need it for every lesson!
 			const sampler1 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke2/driftDrones/',
@@ -162,22 +178,6 @@
 			scheduleRandomRepeat(function(time) {
 				sampler1.triggerAttack('C1', time);
 			}, 17.25, 30.67, getRandomBetween(10, 50));
-
-			document.addEventListener("DOMContentLoaded", () => {
-				const button = document.createElement("button");
-				button.id = "playButton";
-				button.style.display = "block";
-				button.style.margin = "20px";
-				button.style.padding = "10px";
-				button.textContent = "Play Audio";
-				document.body.appendChild(button);
-
-				// Add the event listener for the button
-				button.addEventListener("click", async () => {
-					await Tone.start();
-					console.log("audio is ready");
-				});
-			});
 		</script>
 	</head>
 	<body>
