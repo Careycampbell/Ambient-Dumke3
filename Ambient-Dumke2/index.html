@@ -167,9 +167,18 @@
 				await Tone.start();
 				console.log("audio is ready");
 			});
+
+			document.addEventListener("DOMContentLoaded", () => {
+				const button = document.createElement("button");
+				button.id = "playButton";
+				button.style.display = "block";
+				button.style.margin = "20px";
+				button.style.padding = "10px";
+				button.textContent = "Play Audio";
+				document.body.appendChild(button);
+			});
 		</script>
 	</head>
 	<body>
-			<button id="playButton">Play Audio</button>
 	</body>
 </html>
