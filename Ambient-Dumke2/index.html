@@ -163,11 +163,6 @@
 				sampler1.triggerAttack('C1', time);
 			}, 17.25, 30.67, getRandomBetween(10, 50));
 
-			document.querySelector("button")?.addEventListener("click", async () => {
-				await Tone.start();
-				console.log("audio is ready");
-			});
-
 			document.addEventListener("DOMContentLoaded", () => {
 				const button = document.createElement("button");
 				button.id = "playButton";
@@ -176,6 +171,12 @@
 				button.style.padding = "10px";
 				button.textContent = "Play Audio";
 				document.body.appendChild(button);
+
+				// Add the event listener for the button
+				button.addEventListener("click", async () => {
+					await Tone.start();
+					console.log("audio is ready");
+				});
 			});
 		</script>
 	</head>
