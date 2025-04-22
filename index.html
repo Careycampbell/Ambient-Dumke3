@@ -135,17 +135,22 @@
 			oneShots.volume.value = -20; // Adjust volume as needed
 			oneShots.toDestination(); // Ensure it's connected to the destination
 			
-
-			function playRandomOneShot(time) {
+			function playRandomOneShot() {
 				const keys = ["one", "two", "three", "four"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
-				console.log(`Playing oneShot: ${randomKey} at time: ${time}`);
-				oneShots.player(randomKey).start(time);
+				console.log(`Playing oneShot: ${randomKey}`);
+				const player = oneShots.player(randomKey);
+				player.stop(); // Stop the player if it's already playing
+				player.start(); // Start the player
 			}
 
 			scheduleRandomRepeat(function(time) {
 				playRandomOneShot(time);
 			}, 10, 20, getRandomBetween(0, 40));
+
+			scheduleRandomRepeat(function () {
+				playRandomOneShot();
+			}, 5, 10, getRandomBetween(0, 5)); // Adjust minDelay and maxDelay
 
 			scheduleRandomRepeat(function(time) {
 				sampler2.triggerAttack('F4', time);
