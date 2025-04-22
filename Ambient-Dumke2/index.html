@@ -8,6 +8,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
+				console.log("Script is running");
 				const button = document.createElement("button");
 				button.id = "playButton";
 				button.style.display = "block";
@@ -19,8 +20,11 @@
 				button.textContent = "Play Audio";
 				document.body.appendChild(button);
 
+				console.log("Button added to DOM");
+
 				// Add the event listener for the button
 				button.addEventListener("click", async () => {
+					console.log("Button clicked!");
 					await Tone.start();
 					console.log("audio is ready");
 				});
