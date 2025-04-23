@@ -109,7 +109,13 @@
 				},
 			}).toDestination();
 
-			oneShots.volume.value = -20;
+			// Lower the volume of oS2.wav
+			oneShots.player("two").volume.value = -40; // Adjust volume as needed
+
+			// Raise the volume of oS4.wav
+			oneShots.player("four").volume.value = -15; // Adjust volume to -15
+
+			oneShots.volume.value = -20; // General volume for all players
 
 			function playRandomOneShot(time) {
 				const keys = ["one", "two", "three", "four"];
