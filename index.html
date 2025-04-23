@@ -33,8 +33,8 @@
 					"G1": "driftingF.wav",
 					"F0": "driftingF.wav"
 				},
-				attack: 2,
-				release: 1.5,
+				attack: 2.5,
+				release: 2.5,
 				volume: -30,
 				onload: () => {
 					Tone.Transport.start();
@@ -113,7 +113,7 @@
 			oneShots.player("two").volume.value = -45; // Adjust volume as needed
 
 			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = -10; // Adjust volume to -15
+			oneShots.player("four").volume.value = -5; // Adjust volume to -15
 
 			oneShots.volume.value = -20; // General volume for all players
 
@@ -140,6 +140,8 @@
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 30, 50.4);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 21.3, 35.3);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 17.25, 30.67);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('Db1', time), 40, 90);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('Ab2', time), 30, 45);
 		</script>
 	</head>
 	<body>
