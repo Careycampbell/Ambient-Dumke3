@@ -74,11 +74,16 @@
 
 			const freeverb = new Tone.Freeverb();
 			const chorus = new Tone.Chorus();
+			// Create a lowpass filter
+			const lowpass = new Tone.Filter({
+				type: "lowpass",
+				frequency: 1000, // 1kHz cutoff
+			}).toDestination();
 			chorus.toDestination();
 			sampler2.connect(freeverb);
 			freeverb.toDestination();
 			sampler1.connect(chorus);
-			sampler1.connect(freeverb);
+			sampler1.connect(lowpass);
 
 			const reverbControllerLfo = new Tone.LFO({ min: 0.1, max: 0.9, frequency: 0.001 });
 			reverbControllerLfo.connect(freeverb.wet);
@@ -132,44 +137,9 @@
 				player.start(time); // Start the player at the scheduled time
 			 }
 
-			// Create a lowpass filter
-			const lowpass = new Tone.Filter({
-				type: "lowpass",
-				frequency: 1000, // 1kHz cutoff
-			}).toDestination();
+			
 
-			// Create a new Tone.Player for oS5.wav
-			const loopPlayer = new Tone.Player({
-				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
-				loop: true, // Enable looping
-				volume: -35, // Set volume to -35
-				onload: () => {
-					console.log('oS5.wav loaded and looping');
-					loopPlayer.start(); // Start playback once loaded
-				},
-			}).connect(lowpass); // Connect the player to the lowpass filter
-
-			// Create the first Tone.Player for oS5.wav
-			const loopPlayer1 = new Tone.Player({
-				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
-				loop: true, // Enable looping
-				volume: -45, // Set volume to -35
-				onload: () => {
-					console.log('First oS5.wav loaded and looping');
-					loopPlayer1.start(); // Start playback once loaded
-				},
-			}).connect(lowpass); // Connect the player to the lowpass filter
-
-			// Create the second Tone.Player for oS5.wav
-			const loopPlayer2 = new Tone.Player({
-				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
-				loop: true, // Enable looping
-				volume: -45, // Set volume to -35
-				onload: () => {
-					console.log('Second oS5.wav loaded and looping');
-					loopPlayer2.start("+7"); // Start playback 7 seconds later
-				},
-			}).connect(lowpass); // Connect the player to the lowpass filter
+			
 
 			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45); // Adjusted delay for less frequent playback
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
