@@ -116,15 +116,15 @@
 				}, startTime);
 			}
 
+			const baseUrl = '/Ambient-Dumke3/Ambient-Dumke2/oneShots/';
 			const oneShots = new Tone.Players({
-				baseUrl: 'Ambient-Dumke2/oneShots/',
+				baseUrl: baseUrl, // Use the defined baseUrl
 				urls: {
-					"one": baseUrl + "oS1.wav",
-					"two": baseUrl + "oS2.wav",
-					"three": baseUrl + "oS3.wav",
-					"four": baseURL + "oS4.wav",
+					"one": "oS1.wav",
+					"two": "oS2.wav",
+					"three": "oS3.wav",
+					"four": "oS4.wav",
 				},
-				
 				onload: function () {
 					console.log('oneShots loaded successfully');
 					Tone.Transport.start();
