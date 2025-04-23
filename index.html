@@ -20,6 +20,7 @@
 
 				button.addEventListener("click", async () => {
 					await Tone.start();
+					Tone.Transport.start();
 					console.log("Audio is ready");
 				});
 			});
@@ -35,7 +36,10 @@
 				attack: 2,
 				release: 1.5,
 				volume: -30,
-				onload: () => Tone.Transport.start(),
+				onload: () => {
+					Tone.Transport.start();
+					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
+				},
 			});
 
 			const sampler2 = new Tone.Sampler({
@@ -100,7 +104,9 @@
 					"four": "oS4.wav",
 				},
 				onload: () => console.log('oneShots loaded successfully'),
-				onerror: (error) => console.error('Error loading oneShots:', error),
+				onerror: (error, key) => {
+					console.error(`Error loading oneShot: ${key}`, error);
+				},
 			}).toDestination();
 
 			oneShots.volume.value = -20;
