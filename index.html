@@ -110,10 +110,10 @@
 			}).toDestination();
 
 			// Lower the volume of oS2.wav
-			oneShots.player("two").volume.value = -40; // Adjust volume as needed
+			oneShots.player("two").volume.value = -45; // Adjust volume as needed
 
 			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = -15; // Adjust volume to -15
+			oneShots.player("four").volume.value = -10; // Adjust volume to -15
 
 			oneShots.volume.value = -20; // General volume for all players
 
@@ -125,7 +125,8 @@
 				player.start(time); // Start the player at the scheduled time
 			}
 
-			scheduleRandomRepeat((time) => playRandomOneShot(time), 5, 10);
+			
+			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 60); // Adjusted delay for less frequent playback
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
