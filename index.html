@@ -35,7 +35,7 @@
 				},
 				attack: 2.5,
 				release: 2.5,
-				volume: -35,
+				volume: -30,
 				onload: () => {
 					Tone.Transport.start();
 					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
@@ -78,6 +78,7 @@
 			sampler2.connect(freeverb);
 			freeverb.toDestination();
 			sampler1.connect(chorus);
+			sampler1.connect(freeverb);
 
 			const reverbControllerLfo = new Tone.LFO({ min: 0.1, max: 0.9, frequency: 0.001 });
 			reverbControllerLfo.connect(freeverb.wet);
@@ -112,8 +113,11 @@
 				},
 			}).toDestination();
 
-			// Lower the volume of oS2.wav
-			oneShots.player("two").volume.value = -45; // Adjust volume as needed
+			// Lower the volume of specific players
+			oneShots.player("two").volume.value = -45; // Lower volume of oS2.wav
+			oneShots.player("five").volume.value = -45; // Lower volume of oS5.wav
+			oneShots.player("six").volume.value = -45; // Lower volume of oS6.wav
+			oneShots.player("seven").volume.value = -45; // Lower volume of oS7.wav
 
 			// Raise the volume of oS4.wav
 			oneShots.player("four").volume.value = -5; // Adjust volume to -15
