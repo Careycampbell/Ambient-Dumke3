@@ -2,7 +2,7 @@
 <html>
 	<head>	
 		<meta charset="utf-8" />
-		<title>Ambient Dumke 2</title>
+		<title>Ambient Dumke 3</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- Load Tone.js -->
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
@@ -19,32 +19,11 @@
 				document.body.appendChild(button);
 
 				button.addEventListener("click", async () => {
-					await Tone.start(); // Ensure the AudioContext is started
-					Tone.Transport.start(); // Start the transport after Tone.start()
+					await Tone.start();
+					Tone.Transport.start();
 					console.log("Audio is ready");
 				});
-
-				// Add a message element to the HTML
-				const message = document.createElement("p");
-				message.id = "loadingMessage";
-				message.textContent = "Loading sounds...";
-				document.body.appendChild(message);
 			});
-
-			// Track the loading state
-			let soundsLoaded = 0;
-			const totalSounds = 2; // Update this number based on the total number of Tone.Players and Tone.Samplers
-
-			// Update the message when all sounds are loaded
-			function checkAllSoundsLoaded() {
-				soundsLoaded++;
-				if (soundsLoaded === totalSounds) {
-					const message = document.getElementById("loadingMessage");
-					if (message) {
-						message.textContent = "All sounds loaded!";
-					}
-				}
-			}
 
 			const sampler1 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke3/driftDrones/',
@@ -57,12 +36,7 @@
 				attack: 3,
 				release: 2.5,
 				volume: -37,
-				onload: () => {
-					console.log("Sampler1 loaded");
-					checkAllSoundsLoaded();
-					Tone.Transport.start();
-					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
-				},
+				onload: () => console.log("Sampler1 loaded"),
 			});
 
 			const sampler2 = new Tone.Sampler({
@@ -92,16 +66,16 @@
 					"C8": "c8.wav"
 				},
 				volume: -15,
-				onload: () => Tone.Transport.start(),
+				onload: () => console.log("Sampler2 loaded"),
 			});
 
 			const freeverb = new Tone.Freeverb();
 			const chorus = new Tone.Chorus();
-			// Create a lowpass filter
 			const lowpass = new Tone.Filter({
 				type: "lowpass",
 				frequency: 1000, // 1kHz cutoff
 			}).toDestination();
+
 			chorus.toDestination();
 			sampler2.connect(freeverb);
 			freeverb.toDestination();
@@ -135,39 +109,26 @@
 					"six": "oS6.wav",
 					"seven": "oS7.wav",
 				},
-				onload: () => {
-					console.log("OneShots loaded");
-					checkAllSoundsLoaded();
-				},
-				onerror: (error, key) => {
-					console.error(`Error loading oneShot: ${key}`, error);
-				},
+				onload: () => console.log("OneShots loaded"),
+				onerror: (error, key) => console.error(`Error loading oneShot: ${key}`, error),
 			}).toDestination();
 
-			// Lower the volume of specific players
-			oneShots.player("two").volume.value = -30; // Lower volume of oS2.wav
-			oneShots.player("five").volume.value = -30; // Lower volume of oS5.wav
-			oneShots.player("six").volume.value = -30; // Lower volume of oS6.wav
-			oneShots.player("seven").volume.value = -30; // Lower volume of oS7.wav
-
-			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = +3; // Adjust volume to -15
-
-			oneShots.volume.value = -20; // General volume for all players
+			oneShots.player("two").volume.value = -30;
+			oneShots.player("five").volume.value = -30;
+			oneShots.player("six").volume.value = -30;
+			oneShots.player("seven").volume.value = -30;
+			oneShots.player("four").volume.value = -15;
+			oneShots.volume.value = -20;
 
 			function playRandomOneShot(time) {
 				const keys = ["one", "two", "three", "four", "five", "six", "seven"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
 				const player = oneShots.player(randomKey);
-				player.stop(time); // Stop the player at the scheduled time
-				player.start(time); // Start the player at the scheduled time
-			 }
+				player.stop(time);
+				player.start(time);
+			}
 
-			
-
-			
-
-			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45); // Adjusted delay for less frequent playback
+			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
