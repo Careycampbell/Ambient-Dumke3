@@ -35,7 +35,7 @@
 				},
 				attack: 2.5,
 				release: 2.5,
-				volume: -30,
+				volume: -27,
 				onload: () => {
 					Tone.Transport.start();
 					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
@@ -68,7 +68,7 @@
 					"A7": "a7.wav",
 					"C8": "c8.wav"
 				},
-				volume: -16,
+				volume: -15,
 				onload: () => Tone.Transport.start(),
 			});
 
@@ -114,13 +114,13 @@
 			}).toDestination();
 
 			// Lower the volume of specific players
-			oneShots.player("two").volume.value = -45; // Lower volume of oS2.wav
-			oneShots.player("five").volume.value = -45; // Lower volume of oS5.wav
-			oneShots.player("six").volume.value = -45; // Lower volume of oS6.wav
-			oneShots.player("seven").volume.value = -45; // Lower volume of oS7.wav
+			oneShots.player("two").volume.value = -40; // Lower volume of oS2.wav
+			oneShots.player("five").volume.value = -40; // Lower volume of oS5.wav
+			oneShots.player("six").volume.value = -40; // Lower volume of oS6.wav
+			oneShots.player("seven").volume.value = -40; // Lower volume of oS7.wav
 
 			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = -5; // Adjust volume to -15
+			oneShots.player("four").volume.value = -2; // Adjust volume to -15
 
 			oneShots.volume.value = -20; // General volume for all players
 
@@ -133,7 +133,7 @@
 			}
 
 			
-			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 60); // Adjusted delay for less frequent playback
+			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45); // Adjusted delay for less frequent playback
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
