@@ -35,7 +35,7 @@
 				},
 				attack: 2.5,
 				release: 2.5,
-				volume: -30,
+				volume: -35,
 				onload: () => {
 					Tone.Transport.start();
 					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
@@ -134,18 +134,19 @@
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Eb5', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F5', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab5', time), 15, 30);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('C0', time), 17.25, 30.67);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('F0', time), 21.3, 35.3);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('G2', time), 19.1, 30);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 30, 50.4);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 21.3, 35.3);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 17.25, 30.67);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C0', time), 30, 60);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F0', time), 25, 45.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('G2', time), 35, 40);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 37, 50.4);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 38.3, 55.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 27.25, 45.67);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('Db1', time), 40, 90);
-			scheduleRandomRepeat((time) => sampler1.triggerAttack('Ab2', time), 30, 45);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('Ab2', time), 30, 65);
 		</script>
 	</head>
 	<body>
-		<h1>Ambient Dumke 2</h1>
+		<h1>Ambient Dumke 3</h1>
 		<p>Click the button to start the audio.</p>
+		<p>Wait because sometimes it takes a minute to start</p>
 	</body>
 </html>
