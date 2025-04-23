@@ -102,6 +102,9 @@
 					"two": "oS2.wav",
 					"three": "oS3.wav",
 					"four": "oS4.wav",
+					"five": "oS5.wav",
+					"six": "oS6.wav",
+					"seven": "oS7.wav",
 				},
 				onload: () => console.log('oneShots loaded successfully'),
 				onerror: (error, key) => {
@@ -118,7 +121,7 @@
 			oneShots.volume.value = -20; // General volume for all players
 
 			function playRandomOneShot(time) {
-				const keys = ["one", "two", "three", "four"];
+				const keys = ["one", "two", "three", "four", "five", "six", "seven"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
 				const player = oneShots.player(randomKey);
 				player.stop(time); // Stop the player at the scheduled time
