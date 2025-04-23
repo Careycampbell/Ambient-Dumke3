@@ -117,11 +117,12 @@
 			}
 
 			const oneShots = new Tone.Players({
+				baseUrl: 'Ambient-Dumke2/oneShots/',
 				urls: {
-					"one": "/Ambient-Dumke2/oneShots/oS1.wav",
-					"two": "/Ambient-Dumke2/oneShots/oS2.wav",
-					"three": "/Ambient-Dumke2/oneShots/oS3.wav",
-					"four": "/Ambient-Dumke2/oneShots/oS4.wav",
+					"one": "oS1.wav",
+					"two": "oS2.wav",
+					"three": "oS3.wav",
+					"four": "oS4.wav",
 				},
 				
 				onload: function () {
@@ -136,7 +137,7 @@
 			oneShots.toDestination(); // Ensure it's connected to the destination
 			
 			function playRandomOneShot() {
-				const keys = ["four"];
+				const keys = ["one", "two", "three", "four"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
 				console.log(`Playing oneShot: ${randomKey}`);
 				const player = oneShots.player(randomKey);
