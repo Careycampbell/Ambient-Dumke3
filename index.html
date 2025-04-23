@@ -19,8 +19,8 @@
 				document.body.appendChild(button);
 
 				button.addEventListener("click", async () => {
-					await Tone.start();
-					Tone.Transport.start();
+					await Tone.start(); // Ensure the AudioContext is started
+					Tone.Transport.start(); // Start the transport after Tone.start()
 					console.log("Audio is ready");
 				});
 			});
@@ -111,15 +111,15 @@
 
 			oneShots.volume.value = -20;
 
-			function playRandomOneShot() {
+			function playRandomOneShot(time) {
 				const keys = ["one", "two", "three", "four"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
 				const player = oneShots.player(randomKey);
-				player.stop();
-				player.start();
+				player.stop(time); // Stop the player at the scheduled time
+				player.start(time); // Start the player at the scheduled time
 			}
 
-			scheduleRandomRepeat(() => playRandomOneShot(), 5, 10);
+			scheduleRandomRepeat((time) => playRandomOneShot(time), 5, 10);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
