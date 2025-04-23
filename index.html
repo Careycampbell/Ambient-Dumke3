@@ -33,9 +33,9 @@
 					"G1": "driftingF.wav",
 					"F0": "driftingF.wav"
 				},
-				attack: 2.5,
+				attack: 3,
 				release: 2.5,
-				volume: -35,
+				volume: -37,
 				onload: () => {
 					Tone.Transport.start();
 					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
@@ -114,13 +114,13 @@
 			}).toDestination();
 
 			// Lower the volume of specific players
-			oneShots.player("two").volume.value = -40; // Lower volume of oS2.wav
-			oneShots.player("five").volume.value = -40; // Lower volume of oS5.wav
-			oneShots.player("six").volume.value = -40; // Lower volume of oS6.wav
-			oneShots.player("seven").volume.value = -40; // Lower volume of oS7.wav
+			oneShots.player("two").volume.value = -30; // Lower volume of oS2.wav
+			oneShots.player("five").volume.value = -30; // Lower volume of oS5.wav
+			oneShots.player("six").volume.value = -30; // Lower volume of oS6.wav
+			oneShots.player("seven").volume.value = -30; // Lower volume of oS7.wav
 
 			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = -2; // Adjust volume to -15
+			oneShots.player("four").volume.value = -0; // Adjust volume to -15
 
 			oneShots.volume.value = -20; // General volume for all players
 
@@ -130,9 +130,25 @@
 				const player = oneShots.player(randomKey);
 				player.stop(time); // Stop the player at the scheduled time
 				player.start(time); // Start the player at the scheduled time
-			}
+			 }
 
-			
+			// Create a lowpass filter
+			const lowpass = new Tone.Filter({
+				type: "lowpass",
+				frequency: 1000, // 1kHz cutoff
+			}).toDestination();
+
+			// Create a new Tone.Player for oS5.wav
+			const loopPlayer = new Tone.Player({
+				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
+				loop: true, // Enable looping
+				volume: -35, // Set volume to -35
+				onload: () => {
+					console.log('oS5.wav loaded and looping');
+					loopPlayer.start(); // Start playback once loaded
+				},
+			}).connect(lowpass); // Connect the player to the lowpass filter
+
 			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45); // Adjusted delay for less frequent playback
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
