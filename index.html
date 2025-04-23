@@ -144,6 +144,19 @@
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 27.25, 45.67);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('Db1', time), 40, 90);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('Ab2', time), 30, 65);
+
+			// Create a player for oS5.wav
+			const oS5Player = new Tone.Player({
+				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
+				volume: -20, // Adjust volume as needed
+				onload: () => console.log("oS5.wav loaded"),
+			}).toDestination();
+
+			// Schedule oS5.wav to play twice when the transport starts
+			Tone.Transport.schedule((time) => {
+				oS5Player.start(time); // Play the first time
+				oS5Player.start(time + oS5Player.buffer.duration); // Play the second time after the first finishes
+			});
 		</script>
 	</head>
 	<body>
