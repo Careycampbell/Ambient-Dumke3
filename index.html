@@ -23,7 +23,28 @@
 					Tone.Transport.start(); // Start the transport after Tone.start()
 					console.log("Audio is ready");
 				});
+
+				// Add a message element to the HTML
+				const message = document.createElement("p");
+				message.id = "loadingMessage";
+				message.textContent = "Loading sounds...";
+				document.body.appendChild(message);
 			});
+
+			// Track the loading state
+			let soundsLoaded = 0;
+			const totalSounds = 2; // Update this number based on the total number of Tone.Players and Tone.Samplers
+
+			// Update the message when all sounds are loaded
+			function checkAllSoundsLoaded() {
+				soundsLoaded++;
+				if (soundsLoaded === totalSounds) {
+					const message = document.getElementById("loadingMessage");
+					if (message) {
+						message.textContent = "All sounds loaded!";
+					}
+				}
+			}
 
 			const sampler1 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke3/driftDrones/',
@@ -37,6 +58,8 @@
 				release: 2.5,
 				volume: -37,
 				onload: () => {
+					console.log("Sampler1 loaded");
+					checkAllSoundsLoaded();
 					Tone.Transport.start();
 					console.log("Tone.Transport state:", Tone.Transport.state); // Should log "started"
 				},
@@ -112,7 +135,10 @@
 					"six": "oS6.wav",
 					"seven": "oS7.wav",
 				},
-				onload: () => console.log('oneShots loaded successfully'),
+				onload: () => {
+					console.log("OneShots loaded");
+					checkAllSoundsLoaded();
+				},
 				onerror: (error, key) => {
 					console.error(`Error loading oneShot: ${key}`, error);
 				},
