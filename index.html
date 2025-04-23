@@ -120,7 +120,7 @@
 			oneShots.player("seven").volume.value = -30; // Lower volume of oS7.wav
 
 			// Raise the volume of oS4.wav
-			oneShots.player("four").volume.value = -0; // Adjust volume to -15
+			oneShots.player("four").volume.value = +3; // Adjust volume to -15
 
 			oneShots.volume.value = -20; // General volume for all players
 
@@ -146,6 +146,28 @@
 				onload: () => {
 					console.log('oS5.wav loaded and looping');
 					loopPlayer.start(); // Start playback once loaded
+				},
+			}).connect(lowpass); // Connect the player to the lowpass filter
+
+			// Create the first Tone.Player for oS5.wav
+			const loopPlayer1 = new Tone.Player({
+				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
+				loop: true, // Enable looping
+				volume: -37, // Set volume to -35
+				onload: () => {
+					console.log('First oS5.wav loaded and looping');
+					loopPlayer1.start(); // Start playback once loaded
+				},
+			}).connect(lowpass); // Connect the player to the lowpass filter
+
+			// Create the second Tone.Player for oS5.wav
+			const loopPlayer2 = new Tone.Player({
+				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
+				loop: true, // Enable looping
+				volume: -37, // Set volume to -35
+				onload: () => {
+					console.log('Second oS5.wav loaded and looping');
+					loopPlayer2.start("+7"); // Start playback 7 seconds later
 				},
 			}).connect(lowpass); // Connect the player to the lowpass filter
 
