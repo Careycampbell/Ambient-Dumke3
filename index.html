@@ -2,13 +2,12 @@
 <html>
 	<head>	
 		<meta charset="utf-8" />
-		<title>AmbientDumke2</title>
+		<title>Ambient Dumke 2</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!-- LOAD Tone.js from unpkg -->
+		<!-- Load Tone.js -->
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
-				console.log("Script is running");
 				const button = document.createElement("button");
 				button.id = "playButton";
 				button.style.display = "block";
@@ -16,21 +15,15 @@
 				button.style.padding = "10px";
 				button.style.backgroundColor = "blue";
 				button.style.color = "white";
-				button.style.zIndex = "9999";
 				button.textContent = "Play Audio";
 				document.body.appendChild(button);
 
-				console.log("Button added to DOM");
-
-				// Add the event listener for the button
 				button.addEventListener("click", async () => {
-					console.log("Button clicked!");
 					await Tone.start();
-					console.log("audio is ready");
+					console.log("Audio is ready");
 				});
 			});
 
-			// Don't remove this; you'll need it for every lesson!
 			const sampler1 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke3/driftDrones/',
 				urls: {
@@ -42,10 +35,9 @@
 				attack: 2,
 				release: 1.5,
 				volume: -30,
-				onload: function () {
-					Tone.Transport.start();
-				},
+				onload: () => Tone.Transport.start(),
 			});
+
 			const sampler2 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke3/vsco2-ce/upright-piano/',
 				urls: {
@@ -73,132 +65,72 @@
 					"C8": "c8.wav"
 				},
 				volume: -16,
-				onload: function () {
-					Tone.Transport.start();
-				},
+				onload: () => Tone.Transport.start(),
 			});
+
 			const freeverb = new Tone.Freeverb();
 			const chorus = new Tone.Chorus();
 			chorus.toDestination();
 			sampler2.connect(freeverb);
 			freeverb.toDestination();
 			sampler1.connect(chorus);
+
 			const reverbControllerLfo = new Tone.LFO({ min: 0.1, max: 0.9, frequency: 0.001 });
 			reverbControllerLfo.connect(freeverb.wet);
 			reverbControllerLfo.start();
-			
+
 			function getRandomBetween(min, max) {
-				if (typeof min !== 'number' || typeof max !== 'number') {
-					throw new Error(`Invalid arguments for getRandomBetween: min=${min}, max=${max}`);
-				}
-				const result = Math.random() * (max - min) + min;
-				console.log(`getRandomBetween(${min}, ${max}) = ${result}`);
-				return result;
+				return Math.random() * (max - min) + min;
 			}
 
 			function scheduleRandomRepeat(scheduledFunction, minDelay, maxDelay, startTime = getRandomBetween(minDelay, maxDelay)) {
-				console.log('scheduleRandomRepeat called with:', { minDelay, maxDelay, startTime });
-				if (typeof minDelay !== 'number' || typeof maxDelay !== 'number') {
-					throw new Error(`Invalid delay values: minDelay=${minDelay}, maxDelay=${maxDelay}`);
-				}
-				if (typeof startTime !== 'number' || isNaN(startTime)) {
-					throw new Error(`Invalid startTime: ${startTime}`);
-				}
-				Tone.Transport.scheduleOnce(function(time) {
-					console.log('Scheduled time:', time);
-					if (isNaN(time)) {
-						throw new Error(`Invalid time for scheduledFunction: ${time}`);
-					}
+				Tone.Transport.scheduleOnce((time) => {
 					scheduledFunction(time);
 					const delay = getRandomBetween(minDelay, maxDelay);
-					console.log('Next delay:', delay);
 					scheduleRandomRepeat(scheduledFunction, minDelay, maxDelay, time + delay);
 				}, startTime);
 			}
 
-			const baseUrl = '/Ambient-Dumke3/oneShots/';
 			const oneShots = new Tone.Players({
-				baseUrl: baseUrl, // Use the defined baseUrl
+				baseUrl: '/Ambient-Dumke3/oneShots/',
 				urls: {
 					"one": "oS1.wav",
 					"two": "oS2.wav",
 					"three": "oS3.wav",
 					"four": "oS4.wav",
 				},
-				onload: function () {
-					console.log('oneShots loaded successfully');
-					Tone.Transport.start();
-				},
-				onerror: function (error) {
-					console.error('Error loading oneShots:', error);
-				},
-			});
-			oneShots.volume.value = -20; // Adjust volume as needed
-			oneShots.toDestination(); // Ensure it's connected to the destination
-			
+				onload: () => console.log('oneShots loaded successfully'),
+				onerror: (error) => console.error('Error loading oneShots:', error),
+			}).toDestination();
+
+			oneShots.volume.value = -20;
+
 			function playRandomOneShot() {
 				const keys = ["one", "two", "three", "four"];
 				const randomKey = keys[Math.floor(Math.random() * keys.length)];
-				console.log(`Playing oneShot: ${randomKey}`);
 				const player = oneShots.player(randomKey);
-				player.stop(); // Stop the player if it's already playing
-				player.start(); // Start the player
+				player.stop();
+				player.start();
 			}
 
-			scheduleRandomRepeat(function(time) {
-				playRandomOneShot(time);
-			}, 10, 20, getRandomBetween(0, 40));
-
-			scheduleRandomRepeat(function () {
-				playRandomOneShot();
-			}, 5, 10, getRandomBetween(0, 5)); // Adjust minDelay and maxDelay
-
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('F4', time);
-			}, 15, 30, getRandomBetween(0, 5));
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('Ab4', time);
-			}, 15, 30, getRandomBetween(0, 5));
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('C5', time);
-			}, 15, 30, getRandomBetween(0, 15));
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('Db5', time);
-			}, 15, 30, getRandomBetween(0, 15));
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('Eb5', time);
-			}, 15, 30);
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('F5', time);
-			}, 15, 30);
-			scheduleRandomRepeat(function(time) {
-				sampler2.triggerAttack('Ab5', time);
-			}, 15, 30);
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('C0', time);
-			}, 17.25, 30.67, getRandomBetween(10, 50));
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('F0', time);
-			}, 21.3, 35.3, getRandomBetween(15, 70));
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('G2', time);
-			}, 19.1, 30, getRandomBetween(20, 80));
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('D#2', time);
-			}, 30, 50.4, getRandomBetween(60, 90));
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('F1', time);
-			}, 21.3, 35.3, getRandomBetween(15, 70));
-			scheduleRandomRepeat(function(time) {
-				sampler1.triggerAttack('C1', time);
-			}, 17.25, 30.67, getRandomBetween(10, 50));
-		</script>
-		<script>
-			console.log("Script is loaded");
+			scheduleRandomRepeat(() => playRandomOneShot(), 5, 10);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Db5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Eb5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('F5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C0', time), 17.25, 30.67);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F0', time), 21.3, 35.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('G2', time), 19.1, 30);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 30, 50.4);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 21.3, 35.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 17.25, 30.67);
 		</script>
 	</head>
 	<body>
-		<h11>Ambient Dumke 2</h11>
+		<h1>Ambient Dumke 2</h1>
 		<p>Click the button to start the audio.</p>
 	</body>
 </html>
