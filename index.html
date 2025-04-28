@@ -8,20 +8,56 @@
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
-				const button = document.createElement("button");
-				button.id = "playButton";
-				button.style.display = "block";
-				button.style.margin = "20px";
-				button.style.padding = "10px";
-				button.style.backgroundColor = "blue";
-				button.style.color = "white";
-				button.textContent = "Play Audio";
-				document.body.appendChild(button);
+				// Create Play button
+				const playButton = document.createElement("button");
+				playButton.id = "playButton";
+				playButton.style.display = "block";
+				playButton.style.margin = "10px";
+				playButton.style.padding = "10px";
+				playButton.style.backgroundColor = "blue";
+				playButton.style.color = "white";
+				playButton.textContent = "Play Audio";
+				document.body.appendChild(playButton);
 
-				button.addEventListener("click", async () => {
+				// Create Stop button
+				const stopButton = document.createElement("button");
+				stopButton.id = "stopButton";
+				stopButton.style.display = "block";
+				stopButton.style.margin = "10px";
+				stopButton.style.padding = "10px";
+				stopButton.style.backgroundColor = "red";
+				stopButton.style.color = "white";
+				stopButton.textContent = "Stop Audio";
+				document.body.appendChild(stopButton);
+
+				// Create Pause button
+				const pauseButton = document.createElement("button");
+				pauseButton.id = "pauseButton";
+				pauseButton.style.display = "block";
+				pauseButton.style.margin = "10px";
+				pauseButton.style.padding = "10px";
+				pauseButton.style.backgroundColor = "orange";
+				pauseButton.style.color = "white";
+				pauseButton.textContent = "Pause Audio";
+				document.body.appendChild(pauseButton);
+
+				// Play button functionality
+				playButton.addEventListener("click", async () => {
 					await Tone.start();
 					Tone.Transport.start();
-					console.log("Audio is ready");
+					console.log("Audio is playing");
+				});
+
+				// Stop button functionality
+				stopButton.addEventListener("click", () => {
+					Tone.Transport.stop();
+					console.log("Audio stopped");
+				});
+
+				// Pause button functionality
+				pauseButton.addEventListener("click", () => {
+					Tone.Transport.pause();
+					console.log("Audio paused");
 				});
 			});
 
