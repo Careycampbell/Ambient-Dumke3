@@ -10,56 +10,57 @@
 			document.addEventListener("DOMContentLoaded", () => {
 				// Create Play button
 				const playButton = document.createElement("button");
-				playButton.id = "playButton";
-				playButton.style.display = "block";
+				playButton.textContent = "Start Audio Automation";
 				playButton.style.margin = "10px";
-				playButton.style.padding = "10px";
-				playButton.style.backgroundColor = "blue";
-				playButton.style.color = "white";
-				playButton.textContent = "Play Audio";
 				document.body.appendChild(playButton);
 
-				// Create Stop button
-				const stopButton = document.createElement("button");
-				stopButton.id = "stopButton";
-				stopButton.style.display = "block";
-				stopButton.style.margin = "10px";
-				stopButton.style.padding = "10px";
-				stopButton.style.backgroundColor = "red";
-				stopButton.style.color = "white";
-				stopButton.textContent = "Stop Audio";
-				document.body.appendChild(stopButton);
-
-				// Create Pause button
-				const pauseButton = document.createElement("button");
-				pauseButton.id = "pauseButton";
-				pauseButton.style.display = "block";
-				pauseButton.style.margin = "10px";
-				pauseButton.style.padding = "10px";
-				pauseButton.style.backgroundColor = "orange";
-				pauseButton.style.color = "white";
-				pauseButton.textContent = "Pause Audio";
-				document.body.appendChild(pauseButton);
-
-				// Play button functionality
+				// User interaction to unlock AudioContext
 				playButton.addEventListener("click", async () => {
-					await Tone.start();
-					Tone.Transport.start();
-					console.log("Audio is playing");
-				});
+					await Tone.start(); // Unlock the AudioContext
+					console.log("AudioContext unlocked");
 
-				// Stop button functionality
-				stopButton.addEventListener("click", () => {
-					Tone.Transport.stop();
-					console.log("Audio stopped");
-				});
-
-				// Pause button functionality
-				pauseButton.addEventListener("click", () => {
-					Tone.Transport.pause();
-					console.log("Audio paused");
+					// Start and stop audio at specific times
+					scheduleAudioAutomation();
 				});
 			});
+
+			function scheduleAudioAutomation() {
+				const startTime = { hour: 15, minute: 35 }; // 9:00 AM
+				const stopTime = { hour: 16, minute: 0 }; // 5:00 PM
+
+				function checkTime() {
+					const now = new Date();
+					const currentHour = now.getHours();
+					const currentMinute = now.getMinutes();
+
+					if (
+						currentHour > startTime.hour ||
+						(currentHour === startTime.hour && currentMinute >= startTime.minute)
+					) {
+						if (
+							currentHour < stopTime.hour ||
+							(currentHour === stopTime.hour && currentMinute < stopTime.minute)
+						) {
+							if (Tone.Transport.state !== "started") {
+								Tone.Transport.start();
+								console.log("Audio started");
+							}
+							return;
+						}
+					}
+
+					if (Tone.Transport.state === "started") {
+						Tone.Transport.stop();
+						console.log("Audio stopped");
+					}
+				}
+
+				// Check the time every minute
+				setInterval(checkTime, 60000); // 60,000 ms = 1 minute
+
+				// Initial check
+				checkTime();
+			}
 
 			const sampler1 = new Tone.Sampler({
 				baseUrl: '/Ambient-Dumke3/driftDrones/',
