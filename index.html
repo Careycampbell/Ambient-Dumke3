@@ -10,8 +10,13 @@
 			document.addEventListener("DOMContentLoaded", () => {
 				// Create Play button
 				const playButton = document.createElement("button");
-				playButton.textContent = "Start Audio Automation";
+				playButton.id = "playButton";
+				playButton.style.display = "block";
 				playButton.style.margin = "10px";
+				playButton.style.padding = "10px";
+				playButton.style.backgroundColor = "blue";
+				playButton.style.color = "white";
+				playButton.textContent = "Start Audio Automation";
 				document.body.appendChild(playButton);
 
 				// User interaction to unlock AudioContext
@@ -25,8 +30,8 @@
 			});
 
 			function scheduleAudioAutomation() {
-				const startTime = { hour: 15, minute: 53 }; // 9:00 AM
-				const stopTime = { hour: 15, minute: 50 }; // 5:00 PM
+				const startTime = { hour: 16, minute: 50 }; // 9:00 AM
+				const stopTime = { hour: 17, minute: 0 }; // 5:00 PM
 
 				function checkTime() {
 					const now = new Date();
