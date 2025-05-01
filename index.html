@@ -6,40 +6,66 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- Load Tone.js -->
 		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
+		<style>
+			body {
+				text-align: center; /* Center-align all text */
+				margin: 0;
+				padding: 0;
+				font-family: Arial, sans-serif; /* Optional: Set a clean font */
+			}
+
+			h1, h2, h3, p, footer {
+				margin: 10px auto; /* Add some spacing */
+			}
+
+			button {
+				display: inline-block; /* Ensure buttons are inline */
+				margin: 10px auto; /* Center-align buttons */
+			}
+
+			div {
+				text-align: center; /* Center-align any div content */
+			}
+		</style>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
+				// Create a container for the buttons
+				const buttonContainer = document.createElement("div");
+				buttonContainer.style.margin = "20px";
+				document.body.insertBefore(buttonContainer, document.querySelector("footer"));
+
 				// Create Play button
 				const playButton = document.createElement("button");
 				playButton.id = "playButton";
-				playButton.style.display = "block";
+				playButton.style.display = "inline-block";
 				playButton.style.margin = "10px";
 				playButton.style.padding = "10px";
 				playButton.style.backgroundColor = "blue";
 				playButton.style.color = "white";
 				playButton.textContent = "Play Audio";
-				document.body.appendChild(playButton);
+				buttonContainer.appendChild(playButton);
 
 				// Create Stop button
 				const stopButton = document.createElement("button");
 				stopButton.id = "stopButton";
-				stopButton.style.display = "block";
+				stopButton.style.display = "inline-block";
 				stopButton.style.margin = "10px";
 				stopButton.style.padding = "10px";
 				stopButton.style.backgroundColor = "red";
 				stopButton.style.color = "white";
 				stopButton.textContent = "Stop Audio";
-				document.body.appendChild(stopButton);
+				buttonContainer.appendChild(stopButton);
 
 				// Create Pause button
 				const pauseButton = document.createElement("button");
 				pauseButton.id = "pauseButton";
-				pauseButton.style.display = "block";
+				pauseButton.style.display = "inline-block";
 				pauseButton.style.margin = "10px";
 				pauseButton.style.padding = "10px";
 				pauseButton.style.backgroundColor = "orange";
 				pauseButton.style.color = "white";
 				pauseButton.textContent = "Pause Audio";
-				document.body.appendChild(pauseButton);
+				buttonContainer.appendChild(pauseButton);
 
 				// Play button functionality
 				playButton.addEventListener("click", async () => {
@@ -196,14 +222,15 @@
 		</script>
 	</head>
 	<body>
-		<h1><i>This was water</i> Dumke edition</h1>
-		<h2>Take-home Version</h2>
-		<p>Click the play button to start the audio.</p>
-		<p>(sometimes it takes a minute to start.)</p>
-		<p>The first thing you will hear are two wave sounds; use these to set volume.</p>
-		<p>If you don't hear the waves after clicking the button, refresh the page.</p>
+		<h1><i>This was water</i></h1>
+		
+		<h2>Dumke edition, Take-home Version</h2>
+		<p>Click the play button to start the audio.</br>
+		<html>(sometimes it takes a minute to start.)</br>
+		<html>The first thing you will hear are two wave sounds; use these to set volume.</br>
+		<html>If you don't hear the waves after clicking the button, refresh the page.</br></p>
 	</body>
-	<br>What you are hearing is a generative soundscape, creating itself as you listen. It will never be exactly the same way twice.</p>
+	<h3>This piece is a generative soundscape, creating itself as you listen. <br>Like the environment it honors, it will never be exactly the same way twice.</html></h3></p>
 	<footer>
 		<p>(c) Carey Campbell, 2025</p>
 		
