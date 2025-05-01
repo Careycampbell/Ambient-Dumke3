@@ -50,6 +50,11 @@
 				// Create a container for the buttons
 				const buttonContainer = document.getElementById("buttonContainer");
 
+				// Create a container for the buttons
+				const buttonContainer = document.createElement("div");
+				buttonContainer.style.margin = "20px";
+				document.body.insertBefore(buttonContainer, document.querySelector("footer"));
+
 				// Create Play button
 				const playButton = document.createElement("button");
 				playButton.id = "playButton";
@@ -83,18 +88,6 @@
 				pauseButton.textContent = "Pause Audio";
 				buttonContainer.appendChild(pauseButton);
 
-				 // Create a Tone.Player
-				const player = new Tone.Player({
-					url: '/path-to-your-audio-file.wav', // Replace with your audio file path
-					loop: true, // Optional: Enable looping
-					volume: -10, // Adjust volume as needed
-				}).toDestination();
-
-				// Schedule the player to start when the transport starts
-				Tone.Transport.schedule((time) => {
-					player.start(time);
-				});
-
 				// Play button functionality
 				playButton.addEventListener("click", async () => {
 					await Tone.start(); // Unlock the AudioContext
@@ -116,5 +109,18 @@
 				});
 			});
 		</script>
+	</head>
+	<body>
+		<h1><i>This was water</i></h1>
+		
+		<h2>Dumke edition, Take-home Version</h2>
+		<p>Click the play button to start the audio.</br>
+		<html>(sometimes it takes a minute to start.)</br>
+		<html>The first thing you will hear are two wave sounds; use these to set volume.</br>
+		<html>If you don't hear the waves after clicking the button, refresh the page.</br></p>
 	</body>
+	<h3>This piece is a generative soundscape, creating itself as you listen. <br>Like the environment it honors, it will never be exactly the same way twice.</html></h3></p>
+	<footer>
+		<p>(c) Carey Campbell, 2025</p>
+		
 </html>
