@@ -83,10 +83,23 @@
 				pauseButton.textContent = "Pause Audio";
 				buttonContainer.appendChild(pauseButton);
 
+				 // Create a Tone.Player
+				const player = new Tone.Player({
+					url: '/path-to-your-audio-file.wav', // Replace with your audio file path
+					loop: true, // Optional: Enable looping
+					volume: -10, // Adjust volume as needed
+				}).toDestination();
+
+				// Schedule the player to start when the transport starts
+				Tone.Transport.schedule((time) => {
+					player.start(time);
+				});
+
 				// Play button functionality
 				playButton.addEventListener("click", async () => {
-					await Tone.start();
-					Tone.Transport.start();
+					await Tone.start(); // Unlock the AudioContext
+					console.log("AudioContext unlocked");
+					Tone.Transport.start(); // Start the transport
 					console.log("Audio is playing");
 				});
 
