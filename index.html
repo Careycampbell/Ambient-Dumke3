@@ -1,168 +1,237 @@
 <!DOCTYPE HTML>
 <html>
-    <head>	
-        <meta charset="utf-8" />
-        <title>Ambient Dumke 3</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Load Tone.js -->
-        <script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
-        <style>
-            body {
-                text-align: center;
-                margin: 1;
-                padding: 0;
-                font-family: Arial, sans-serif;
-            }
+	<head>	
+		<meta charset="utf-8" />
+		<title>Ambient Dumke 3</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- Load Tone.js -->
+		<script src="https://cdn.jsdelivr.net/npm/tone@latest/build/Tone.js"></script>
+		<style>
+			body {
+				text-align: center; /* Center-align all text */
+				margin: 0;
+				padding: 0;
+				font-family: Arial, sans-serif; /* Optional: Set a clean font */
+			}
 
-            h1, h2, h3, p, footer {
-                margin: 10px auto;
-            }
+			h1, h2, h3, p, footer {
+				margin: 10px auto; /* Add some spacing */
+			}
 
-            button {
-                display: inline-block;
-                margin: 10px auto;
-                padding: 10px;
-                background-color: blue;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
+			button {
+				display: inline-block; /* Ensure buttons are inline */
+				margin: 10px auto; /* Center-align buttons */
+			}
 
-            button#stopButton {
-                background-color: red;
-            }
+			div {
+				text-align: center; /* Center-align any div content */
+			}
+		</style>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				// Create a container for the buttons
+				const buttonContainer = document.createElement("div");
+				buttonContainer.style.margin = "20px";
+				document.body.insertBefore(buttonContainer, document.querySelector("footer"));
 
-            button#pauseButton {
-                background-color: orange;
-            }
+				// Create Play button
+				const playButton = document.createElement("button");
+				playButton.id = "playButton";
+				playButton.style.display = "inline-block";
+				playButton.style.margin = "10px";
+				playButton.style.padding = "10px";
+				playButton.style.backgroundColor = "blue";
+				playButton.style.color = "white";
+				playButton.textContent = "Play Audio";
+				buttonContainer.appendChild(playButton);
 
-            div {
-                text-align: center;
-                margin: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1><i>This was water</i></h1>
-        <h2>Dumke edition, Take-home Version</h2>
-        <p>
-            Click the play button to start the audio.<br>
-            (sometimes it takes a minute to start.)<br>
-            The first thing you will hear are two wave sounds; use these to set volume.<br>
-            If you don't hear the waves after clicking the button, refresh the page.<br>
-        </p>
-        <h3>
-            This piece is a generative soundscape, creating itself as you listen.<br>
-            Like the environment it honors, it will never be exactly the same way twice.
-        </h3>
-        <div id="buttonContainer"></div>
-        <footer>
-            <p>(c) Carey Campbell, 2025 </p>
-        </footer>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                // Get the button container
-                const buttonContainer = document.getElementById("buttonContainer");
+				// Create Stop button
+				const stopButton = document.createElement("button");
+				stopButton.id = "stopButton";
+				stopButton.style.display = "inline-block";
+				stopButton.style.margin = "10px";
+				stopButton.style.padding = "10px";
+				stopButton.style.backgroundColor = "red";
+				stopButton.style.color = "white";
+				stopButton.textContent = "Stop Audio";
+				buttonContainer.appendChild(stopButton);
 
-                // Create Play button
-                const playButton = document.createElement("button");
-                playButton.id = "playButton";
-                playButton.textContent = "Play Audio";
-                buttonContainer.appendChild(playButton);
+				// Create Pause button
+				const pauseButton = document.createElement("button");
+				pauseButton.id = "pauseButton";
+				pauseButton.style.display = "inline-block";
+				pauseButton.style.margin = "10px";
+				pauseButton.style.padding = "10px";
+				pauseButton.style.backgroundColor = "orange";
+				pauseButton.style.color = "white";
+				pauseButton.textContent = "Pause Audio";
+				buttonContainer.appendChild(pauseButton);
 
-                // Create Stop button
-                const stopButton = document.createElement("button");
-                stopButton.id = "stopButton";
-                stopButton.textContent = "Stop Audio";
-                buttonContainer.appendChild(stopButton);
+				// Play button functionality
+				playButton.addEventListener("click", async () => {
+					await Tone.start();
+					Tone.Transport.start();
+					console.log("Audio is playing");
+				});
 
-                // Create Pause button
-                const pauseButton = document.createElement("button");
-                pauseButton.id = "pauseButton";
-                pauseButton.textContent = "Pause Audio";
-                buttonContainer.appendChild(pauseButton);
+				// Stop button functionality
+				stopButton.addEventListener("click", () => {
+					Tone.Transport.stop();
+					console.log("Audio stopped");
+				});
 
-                // Play button functionality
-                playButton.addEventListener("click", async () => {
-                    await Tone.start(); // Unlock the AudioContext
-                    console.log("AudioContext unlocked");
-                    Tone.Transport.start(); // Start the transport
-                    console.log("Audio is playing");
-                });
+				// Pause button functionality
+				pauseButton.addEventListener("click", () => {
+					Tone.Transport.pause();
+					console.log("Audio paused");
+				});
+			});
 
-                // Stop button functionality
-                stopButton.addEventListener("click", () => {
-                    Tone.Transport.stop();
-                    console.log("Audio stopped");
-                });
+			const sampler1 = new Tone.Sampler({
+				baseUrl: '/Ambient-Dumke3/driftDrones/',
+				urls: {
+					"C0": "driftingC.wav",
+					"C#0": "driftingDflat.wav",
+					"G1": "driftingF.wav",
+					"F0": "driftingF.wav"
+				},
+				attack: 3,
+				release: 2.5,
+				volume: -37,
+				onload: () => console.log("Sampler1 loaded"),
+			});
 
-                // Pause button functionality
-                pauseButton.addEventListener("click", () => {
-                    Tone.Transport.pause();
-                    console.log("Audio paused");
-                });
-            });
+			const sampler2 = new Tone.Sampler({
+				baseUrl: '/Ambient-Dumke3/vsco2-ce/upright-piano/',
+				urls: {
+					"A0": "a0.wav",
+					"C#1": "csharp1.wav",
+					"F1": "f1.wav",
+					"C#2": "csharp2.wav",
+					"F2": "f2.wav",
+					"A2": "a2.wav",
+					"C#3": "csharp3.wav",
+					"F3": "f3.wav",
+					"A3": "a3.wav",
+					"C#4": "csharp4.wav",
+					"F4": "f4.wav",
+					"A4": "a4.wav",
+					"C#5": "csharp5.wav",
+					"F5": "f5.wav",
+					"A5": "a5.wav",
+					"C#6": "csharp6.wav",
+					"F6": "f6.wav",
+					"A6": "a6.wav",
+					"C#7": "csharp7.wav",
+					"F7": "f7.wav",
+					"A7": "a7.wav",
+					"C8": "c8.wav"
+				},
+				volume: -15,
+				onload: () => console.log("Sampler2 loaded"),
+			});
 
-            document.addEventListener("DOMContentLoaded", () => {
-                // Create Play button
-                const playButton = document.createElement("button");
-                playButton.id = "playButton";
-                playButton.style.display = "block";
-                playButton.style.margin = "10px";
-                playButton.style.padding = "10px";
-                playButton.style.backgroundColor = "blue";
-                playButton.style.color = "white";
-                playButton.textContent = "Start Audio Automation";
-                document.body.appendChild(playButton);
+			const freeverb = new Tone.Freeverb();
+			const chorus = new Tone.Chorus();
+			const lowpass = new Tone.Filter({
+				type: "lowpass",
+				frequency: 1000, // 1kHz cutoff
+			}).toDestination();
 
-                // User interaction to unlock AudioContext
-                playButton.addEventListener("click", async () => {
-                    await Tone.start(); // Unlock the AudioContext
-                    console.log("AudioContext unlocked");
+			chorus.toDestination();
+			sampler2.connect(freeverb);
+			freeverb.toDestination();
+			sampler1.connect(chorus);
+			sampler1.connect(lowpass);
 
-                    // Start and stop audio at specific times
-                    scheduleAudioAutomation();
-                });
-            });
+			const reverbControllerLfo = new Tone.LFO({ min: 0.1, max: 0.9, frequency: 0.001 });
+			reverbControllerLfo.connect(freeverb.wet);
+			reverbControllerLfo.start();
 
-            function scheduleAudioAutomation() {
-                const startTime = { hour: 9, minute: 0 }; // 9:00 AM
-                const stopTime = { hour: 17, minute: 0 }; // 5:00 PM
+			function getRandomBetween(min, max) {
+				return Math.random() * (max - min) + min;
+			}
 
-                function checkTime() {
-                    const now = new Date();
-                    const currentHour = now.getHours();
-                    const currentMinute = now.getMinutes();
+			function scheduleRandomRepeat(scheduledFunction, minDelay, maxDelay, startTime = getRandomBetween(minDelay, maxDelay)) {
+				Tone.Transport.scheduleOnce((time) => {
+					scheduledFunction(time);
+					const delay = getRandomBetween(minDelay, maxDelay);
+					scheduleRandomRepeat(scheduledFunction, minDelay, maxDelay, time + delay);
+				}, startTime);
+			}
 
-                    if (
-                        currentHour > startTime.hour ||
-                        (currentHour === startTime.hour && currentMinute >= startTime.minute)
-                    ) {
-                        if (
-                            currentHour < stopTime.hour ||
-                            (currentHour === stopTime.hour && currentMinute < stopTime.minute)
-                        ) {
-                            if (Tone.Transport.state !== "started") {
-                                Tone.Transport.start();
-                                console.log("Audio started");
-                            }
-                            return;
-                        }
-                    }
+			const oneShots = new Tone.Players({
+				baseUrl: '/Ambient-Dumke3/oneShots/',
+				urls: {
+					"one": "oS1.wav",
+					"two": "oS2.wav",
+					"three": "oS3.wav",
+					"four": "oS4.wav",
+					"five": "oS5.wav",
+					"six": "oS6.wav",
+					"seven": "oS7.wav",
+				},
+				onload: () => console.log("OneShots loaded"),
+				onerror: (error, key) => console.error(`Error loading oneShot: ${key}`, error),
+			}).toDestination();
 
-                    if (Tone.Transport.state === "started") {
-                        Tone.Transport.stop();
-                        console.log("Audio stopped");
-                    }
-                }
+			oneShots.player("two").volume.value = -25;
+			oneShots.player("five").volume.value = -30;
+			oneShots.player("six").volume.value = -30;
+			oneShots.player("seven").volume.value = -27;
+			oneShots.player("four").volume.value = -5;
+			oneShots.volume.value = -20;
 
-                // Check the time every minute
-                setInterval(checkTime, 60000); // 60,000 ms = 1 minute
+			function playRandomOneShot(time) {
+				const keys = ["one", "two", "three", "four", "five", "six", "seven"];
+				const randomKey = keys[Math.floor(Math.random() * keys.length)];
+				const player = oneShots.player(randomKey);
+				player.stop(time);
+				player.start(time);
+			}
 
-                // Initial check
-                checkTime();
-            }
-        </script>
-    </body>
+			scheduleRandomRepeat((time) => playRandomOneShot(time), 30, 45);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Db5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Eb5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('F5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C0', time), 30, 60);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F0', time), 25, 45.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('G2', time), 35, 40);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 37, 50.4);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 38.3, 55.3);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 27.25, 45.67);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('Db1', time), 40, 90);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('Ab2', time), 30, 65);
+
+			// Create a player for oS5.wav
+			const oS5Player = new Tone.Player({
+				url: '/Ambient-Dumke3/oneShots/oS5.wav', // Path to oS5.wav
+				volume: -25, // Adjust volume as needed
+				onload: () => console.log("oS5.wav loaded"),
+			}).toDestination();
+
+			// Schedule oS5.wav to play twice when the transport starts
+			Tone.Transport.schedule((time) => {
+				oS5Player.start(time); // Play the first time
+				oS5Player.start(time + oS5Player.buffer.duration); // Play the second time after the first finishes
+			});
+		</script>
+	</head>
+	<body>
+		<h1><i>This was water</i></h1>
+		
+		<h2>Dumke edition, Take-home Version</h2>
+		<p>Click the play button to start the audio.</br>
+		<html>(sometimes it takes a minute to start.)</br>
+		<html>The first thing you will hear are two wave sounds; use these to set volume.</br>
+		<html>If you don't hear the waves after clicking the button, refresh the page.</br></p>
+	</body>
+	<h3>This piece is a generative soundscape, creating itself as you listen. <br>Like the environment it honors, it will never be exactly the same way twice.</html></h3></p>
+	<footer>
+		<p>(c) Carey Campbell, 2025</p>
+		
 </html>
