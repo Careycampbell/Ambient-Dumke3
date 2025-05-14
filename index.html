@@ -47,45 +47,11 @@
 				playButton.textContent = "Play Audio";
 				buttonContainer.appendChild(playButton);
 
-				// Create Stop button
-				const stopButton = document.createElement("button");
-				stopButton.id = "stopButton";
-				stopButton.style.display = "inline-block";
-				stopButton.style.margin = "10px";
-				stopButton.style.padding = "10px";
-				stopButton.style.backgroundColor = "red";
-				stopButton.style.color = "white";
-				stopButton.textContent = "Stop Audio";
-				buttonContainer.appendChild(stopButton);
-
-				// Create Pause button
-				const pauseButton = document.createElement("button");
-				pauseButton.id = "pauseButton";
-				pauseButton.style.display = "inline-block";
-				pauseButton.style.margin = "10px";
-				pauseButton.style.padding = "10px";
-				pauseButton.style.backgroundColor = "orange";
-				pauseButton.style.color = "white";
-				pauseButton.textContent = "Pause Audio";
-				buttonContainer.appendChild(pauseButton);
-
-				// Play button functionality
+				 // Play button functionality
 				playButton.addEventListener("click", async () => {
 					await Tone.start();
 					Tone.Transport.start();
 					console.log("Audio is playing");
-				});
-
-				// Stop button functionality
-				stopButton.addEventListener("click", () => {
-					Tone.Transport.stop();
-					console.log("Audio stopped");
-				});
-
-				// Pause button functionality
-				pauseButton.addEventListener("click", () => {
-					Tone.Transport.pause();
-					console.log("Audio paused");
 				});
 			});
 
