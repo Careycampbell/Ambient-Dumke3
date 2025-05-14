@@ -24,17 +24,17 @@
 				display: inline-block;
 				margin: 10px auto;
 				padding: 10px 24px;
-				background-color: rgba(0, 0, 255, 0.7); /* Semi-transparent blue */
-				color: white;
-				border: none;
-				border-radius: 20px; /* Rounded corners */
+				background: transparent; /* Fully transparent background */
+				color: white;            /* White text */
+				border: 1.5px solid black; /* Thin black border */
+				border-radius: 20px;     /* Rounded corners */
 				cursor: pointer;
 				font-size: 1rem;
-				transition: background 0.2s;
+				transition: background 0.2s, color 0.2s;
 			}
 
 			button:hover {
-				background-color: rgba(0, 0, 180, 0.85); /* Slightly less transparent on hover */
+				background: rgba(0,0,0,0.15); /* Slightly dark on hover */
 			}
 
 			div {
