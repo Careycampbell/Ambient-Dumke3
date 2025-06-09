@@ -158,7 +158,7 @@
 			oneShots.player("five").volume.value = -30;
 			oneShots.player("six").volume.value = -30;
 			oneShots.player("seven").volume.value = -27;
-			oneShots.player("four").volume.value = -5;
+			oneShots.player("four").volume.value = +5;
 			oneShots.volume.value = -20;
 
 			function playRandomOneShot(time) {
@@ -173,13 +173,17 @@
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab4', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('C5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('C2', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Db5', time), 15, 30);
+			scheduleRandomRepeat((time) => sampler2.triggerAttack('Db3', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Eb5', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('F5', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler2.triggerAttack('Ab5', time), 15, 30);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('C0', time), 30, 60);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('C4', time), 30, 60);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('F0', time), 25, 45.3);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('G2', time), 35, 40);
+			scheduleRandomRepeat((time) => sampler1.triggerAttack('G4', time), 35, 40);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('D#2', time), 37, 50.4);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('F1', time), 38.3, 55.3);
 			scheduleRandomRepeat((time) => sampler1.triggerAttack('C1', time), 27.25, 45.67);
